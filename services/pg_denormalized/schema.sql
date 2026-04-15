@@ -63,7 +63,7 @@ CREATE VIEW tweet_tags AS (
             ) AS jsonb
         FROM tweets_jsonb
     ) t
-    UNION ALL
+    UNION
     SELECT DISTINCT id_tweets, '#' || (jsonb->>'text'::TEXT) AS tag
     FROM (
         SELECT
