@@ -11,12 +11,12 @@ echo '==========================================================================
 echo 'load pg_normalized'
 echo '================================================================================'
 time echo "$files" | parallel 'python3 ./load_tweets.py \
-  --db postgresql://postgres:pass@localhost:15440/postgres \
+  --db postgresql://postgres:pass@localhost:21002/postgres \
   --inputs "{}"'
 
 echo '================================================================================'
 echo 'load pg_normalized_batch'
 echo '================================================================================'
 time echo "$files" | parallel 'python3 ./load_tweets_batch.py \
-  --db postgresql://postgres:pass@localhost:15441/postgres \
+  --db postgresql://postgres:pass@localhost:21003/postgres \
   --inputs "{}"'
