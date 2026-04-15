@@ -51,10 +51,11 @@ CREATE VIEW tweet_mentions AS (
     ) t
 );
 
+
 CREATE VIEW tweet_tags AS (
-    SELECT DISTINCT id_tweets, '$' || lower(jsonb->>'text') AS tag
+    SELECT DISTINCT id_tweets, '$' || (jsonb->>'text'::TEXT) AS tag
     FROM (
-        SELECT DISTINCT
+        SELECT
             data->>'id' AS id_tweets,
             jsonb_array_elements(
                 COALESCE(data->'entities'->'symbols','[]') ||
@@ -62,8 +63,8 @@ CREATE VIEW tweet_tags AS (
             ) AS jsonb
         FROM tweets_jsonb
     ) t
-    UNION
-    SELECT DISTINCT id_tweets, '#' || lower(jsonb->>'text') AS tag
+    UNION ALL
+    SELECT DISTINCT id_tweets, '#' || (jsonb->>'text'::TEXT) AS tag
     FROM (
         SELECT
             data->>'id' AS id_tweets,
@@ -74,6 +75,7 @@ CREATE VIEW tweet_tags AS (
         FROM tweets_jsonb
     ) t
 );
+
 
 CREATE VIEW tweet_media AS (
     SELECT DISTINCT
